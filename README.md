@@ -23,6 +23,8 @@ All apis are present in Swagger which can be accessed with below url
 ``
 <Base_URL>/swagger-ui.html
 ``
+![image](https://github.com/preetjyot04/AddressBook/assets/161794560/ef429116-c3fa-4af6-8f5f-b685148c3f53)
+
 
 ### Setup.
 * Docker image has been pushed under public account with name 
