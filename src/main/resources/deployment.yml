@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: addressbook
+spec:
+  selector:
+    matchLabels:
+      app: addressbook
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: addressbook
+    spec:
+      containers:
+        - name: addressbook
+          image: jyotpreet000/addressbook-app:latest
+          ports:
+            - containerPort: 8080
+          env:   # Setting Environmental Variables
+            - name: DB_HOST   # Setting Database host address
+              value: mysql
+            - name: DB_NAME  # Setting Database name
+              value: addressbook
+            - name: DB_USERNAME  # Setting Database username
+              value: root
+            - name: DB_PASSWORD # Setting Database password
+              value: root
+# This seperator --- below is MANDATORY!!!
+---
+# Define a 'Service' To Expose the application
+apiVersion: v1
+kind: Service
+metadata:
+  name: addressbook
+spec:
+  ports:
+    - protocol: "TCP"
+      port: 8080    # Port inside the cluster
+      targetPort: 8080   # Port exposed to the outside
+  selector:
+    app: addressbook
+  type: NodePort

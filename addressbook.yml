@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: AddressBook API
+  description: API for managing address books and contacts
+  version: 1.0.0
+paths:
+  /contacts:
+    post:
+      summary: Add a new contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        '201':
+          description: Contact created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+    get:
+      summary: Get all contacts
+      responses:
+        '200':
+          description: List of contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact'
+  /contacts/{id}:
+    delete:
+      summary: Delete a contact
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Contact deleted
+  /addressbooks:
+    post:
+      summary: Add a new address book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressBook'
+      responses:
+        '201':
+          description: Address book created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressBook'
+    get:
+      summary: Get all address books
+      responses:
+        '200':
+          description: List of address books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AddressBook'
+  /addressbooks/unique-contacts:
+    get:
+      summary: Get unique contacts across all address books
+      responses:
+        '200':
+          description: List of unique contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact'
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        phoneNumber:
+          type: string
+    AddressBook:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
